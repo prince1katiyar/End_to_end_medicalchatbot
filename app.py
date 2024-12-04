@@ -10,6 +10,10 @@ from dotenv import load_dotenv
 from src.prompt import *
 import os
 
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+
 app = Flask(__name__)
 
 load_dotenv()
@@ -21,6 +25,7 @@ os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 embeddings = download_hugging_face_embeddings()
+
 
 index_name = "medicalbot"
 
@@ -58,6 +63,8 @@ def chat():
     response = rag_chain.invoke({"input": msg})
     print("Response : ", response["answer"])
     return str(response["answer"])
+
+
 
 
 if __name__ == '__main__':
